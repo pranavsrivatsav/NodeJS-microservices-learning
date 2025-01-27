@@ -1,0 +1,22 @@
+# apiVersion: Kubernetes is extensible, and each version allows us to create
+# different types of objects, here by mentioning v1, we are sticking to the
+# default list of objects available to be created with Kubernetes
+apiVersion: v1
+
+# The kind of object we want Kubernetes to create
+kind: Pod
+
+# The metadata is the information related to the object that is created by Kubernetes
+metadata:
+  # name we want Kubernetes to assign to the object or in this case the pod
+  name: posts
+
+# The specifications/config of the object or in this case the Pod
+spec:
+  # A pod can have multiple containers, and is specified in a array sort of structure
+  containers:
+    # We want kubernetes to create a pod that hosts only one container
+    - name: posts #name to be assigned to the created container
+      # if a tag is provided, Kubernetes will first search in the local docker repo and try to fetch it from there, if not present it will move to the docker hub that hosts our docker images in the cloud
+      # if a tag is not provided, then Kubernetes will read the image as ps/posts@latest - which means to use the latest possible image, and with this tag, Kubernetes will always go to dockerhub to fetch the latest image
+      image: ps/posts:1.0.0

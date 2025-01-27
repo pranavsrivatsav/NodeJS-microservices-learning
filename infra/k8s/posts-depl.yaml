@@ -1,0 +1,17 @@
+apiVersion: apps/v1 #apiVersion for creating a deployment object (The version differs as per the object created)
+kind: Deployment #kind of object we want to create
+metadata:
+  name: posts-depl #name of the deployment
+spec:
+  replicas: 1 #number of pods to create
+  selector:
+    matchLabels:
+      app: posts #label(key-value pair) based on which the pods that this deployment should manage is identified
+  template:
+    metadata:
+      labels: #labels that should be attached to the pods created using this deployment object
+        app: posts #label (key-value pair) - You can see that this is the same key value pair provided in the previous selector->matchLabels section
+    spec:
+      containers: #Array of containers we want running in the pod - we are creating only one container in our one pod, but potentially a pod can contain multiple containers
+        - name: posts #name of the container
+          image: pranavsrivatsav/posts #image that should run in the container - if no tag provided, implicitly pulls the image with latest tag
