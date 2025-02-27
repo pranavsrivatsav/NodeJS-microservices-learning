@@ -1,0 +1,40 @@
+apiVersion: networking.k8s.io/v1 #apiVersion for creating an ingress object
+kind: Ingress #kind of object we want to create
+metadata:
+  name: ingress-svc #name of the ingress object
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  ingressClassName: nginx #name of the ingress class
+  rules:
+    - host: posts.com
+      http:
+        paths:
+          - path: /posts/create #path in the URL that should be matched
+            pathType: Prefix #type of path matching
+            backend:
+              service:
+                name: posts-clusterip-svc #name of the service that should be used as the backend
+                port:
+                  number: 4000 #port in the service that should be used as the backend
+          - path: /posts
+            pathType: Prefix
+            backend:
+              service:
+                name: query-svc
+                port:
+                  number: 4002
+          - path: /posts/?(.*)/comments
+            pathType: ImplementationSpecific # Needed for regex support
+            backend:
+              service:
+                name: comments-svc
+                port:
+                  number: 4001
+          - path: /?(.*) #To serve the client for the rest of the paths (a catch all) - having regex is better for client application, as they will have paths apart from "/"
+            pathType: ImplementationSpecific # Needed for regex support
+            backend:
+              service:
+                name: client-clusterip-svc
+                port:
+                  number: 3000

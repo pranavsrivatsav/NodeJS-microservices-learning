@@ -30,7 +30,7 @@ app.post('/posts/:id/comments', async (req, res) => {
         comments[postId] = [comment];
     };
 
-    await axios.post('http://localhost:4005/events', {
+    await axios.post('http://events-svc:4005/events', {
         type: 'COMMENT_CREATED',
         payload: {
             commentId,
@@ -63,7 +63,7 @@ app.post('/events', async (req, res) => {
         }
     }
     if(eventPayload)
-    await axios.post('http://localhost:4005/events', eventPayload).catch()
+    await axios.post('http://events-svc:4005/events', eventPayload).catch()
 
     res.send('event received');
 })

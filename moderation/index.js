@@ -27,7 +27,7 @@ app.post("/events", (req, res) => {
     };
   }
   if (eventPayload)
-    axios.post("http://localhost:4005/events", eventPayload).catch();
+    axios.post("http://events-svc:4005/events", eventPayload).catch();
 
   res.send('event received');
 });

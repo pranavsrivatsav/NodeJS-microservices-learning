@@ -13,7 +13,7 @@ app.get('/posts', (req, res) => {
     res.send(posts);
 })
 
-app.post('/posts', async (req, res) => {
+app.post('/posts/create', async (req, res) => {
     const id = randomBytes(4).toString('hex');
     const title = req.body?.title;
     const post = {
@@ -22,7 +22,7 @@ app.post('/posts', async (req, res) => {
     }
     posts[id] = post;
 
-    await axios.post('http://localhost:4005/events', {
+    await axios.post('http://events-svc:4005/events', {
         type: 'POST_CREATED',
         payload: post
     }).catch();
@@ -30,7 +30,7 @@ app.post('/posts', async (req, res) => {
 })
 
 app.post('/events', (req, res) => {
-    console.log(req.body);
+    console.log("Received event", req.body);
     res.send('event received');
 })
 
