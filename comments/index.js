@@ -69,5 +69,5 @@ app.post('/events', async (req, res) => {
 })
 
 app.listen(4001, ()=>{
-    console.log('Listening at 4001');
+    console.log('Listening at 4001...');
 })

@@ -80,7 +80,7 @@ app.listen(4002, async () => {
   console.log("Listening at 4002");
 
   const response = await axios.get('http://events-svc:4005/events').catch((err)=>{data:[]});
-  console.log(response.data)
+  console.log(response?.data)
   const events = response.data;
 
   for(const event of events) {
